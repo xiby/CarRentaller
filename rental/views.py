@@ -4,5 +4,7 @@ from django.shortcuts import render
 
 from django.http import HttpResponse
 
+from django.shortcuts import render
+
 def index(request):
-    return HttpResponse("Hello my first Django app user!")
+    return render(request,'login.html')
