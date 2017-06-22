@@ -18,4 +18,14 @@ class Store(models.Model):
     Setime=models.TimeField()
     SExist=models.BooleanField()
     class Meta:
-        verbose_name=('test')
+        verbose_name=('stores')
+
+class Worker(models.Model):
+    id=models.IntegerField(primary_key=True)
+    FSnumber=models.ForeignKey(Store,related_name='Snumber_foreign')
+    Wname=models.CharField(max_length=10)
+    Wtel=models.CharField(max_length=13)
+    Wsecret=models.CharField(max_length=15)
+    WIDnumber=models.CharField(max_length=18)
+    class Meta:
+        verbose_name=('workers')
