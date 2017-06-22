@@ -29,3 +29,26 @@ class Worker(models.Model):
     WIDnumber=models.CharField(max_length=18)
     class Meta:
         verbose_name=('workers')
+
+class Cartype(models.Model):
+    CTnumber=models.CharField(primary_key=True,max_length=15)#车型编号，主码
+    CTbrand=models.CharField(max_length=15) #车的类型
+    CTprice=models.FloatField()     #基本价格
+    CTcost=models.FloatField()      #押金
+    CTseats=models.IntegerField()   #座位数
+    CTengine=models.CharField(max_length=10)    #引擎号
+    CTgears=models.BooleanField()   #是否为自动挡
+    CTdrawway=models.CharField(max_length=15)   #图片路径
+    CTaddtime=models.TimeField()            #增加时间
+    CTperson=models.ForeignKey(Worker,related_name='addPerson')
+
+# class Car(models.Model):
+#     Cid=models.IntegerField(primary_key=True)
+#     Cnumber=models.CharField(max_length=10)
+#     Clicense=models.CharField(max_length=10)        #字段有何意义？
+#     Cpurchase=models.DataField()
+#     Cseller=models.CharField(max_length=50)
+#     Csettime=models.DataField()
+#     Csettime=models.DataField()
+#     Cuse=models.BooleanField()
+#     Wnumber=models.ForeignKey(Worker,related_name='addperson')

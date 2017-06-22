@@ -1,3 +1,6 @@
 # ignore the database file
 db.sqlite3
 *.db
+/rental/__pycache__/
+/rental/migrations/
+/CarRentaller/__pycache__/
