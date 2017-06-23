@@ -19,7 +19,10 @@ from django.contrib import admin
 from django.conf.urls import include,url
 # from django.contrib import admin
 
+from rental.views import login
+
 urlpatterns = [
-    url(r'^rental/',include('rental.urls')),
+    url(r'^$',include('rental.urls')),
     url(r'^admin/', admin.site.urls),
+    url(r'login/',login)
 ]
