@@ -4,13 +4,23 @@ from django.shortcuts import render
 
 from django.http import HttpResponse
 
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from . import models
 
 def index(request):
-    M=models.Test("789","456","741")
-    M.save()
-    M=models.test.objects.all()
-    for item in M:
-        print(item.id,item.sn,item.extra)
     return render(request,'login.html')
+
+def login(request):
+    # print(request.POST)
+    for item in request.POST:
+        print(item)
+    if request.method=='GET':
+        return render(request,'login.html')
+
+    if request.method=='POST':
+        username=request.POST['username']
+        if request.POST['password']=='123' and 'worker'== request.POST['job']:
+            return HttpResponse("log in success!")
+        else:
+            return HttpResponse("log in failed")
+    
