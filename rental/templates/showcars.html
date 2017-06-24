@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>显示车辆信息</title>
+</head>
+
+<body>
+    <h1>满足条件的车辆信息</h1>
+    <table border="1">
+        <thead>
+            <th>车牌号</th>
+            <th>品牌</th>
+            <th>座位数</th>
+            <th>是否为自动挡（1为自动挡 0为手动挡）</th>
+            <th>租金(元/天)</th>
+            <th>押金</th>
+            <th>是否需要</th>
+        </thead>
+
+        <tbody>
+            {%for line in data%}
+            <tr>
+                <td>{{line.Cnumber}}</td>
+                <td>{{line.CTbrand}}</td>
+                <td>{{line.CTseats}}</td>
+                <td>{{line.CTgears}}</td>
+                <td>{{line.CTprice}}</td>
+                <td>{{line.CTcost}}</td>
+                <td><input type="button" method="post" value="confirm" name={{line.Cnumber}}></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</body>
+
+</html>

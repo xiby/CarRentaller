@@ -20,9 +20,13 @@ from django.conf.urls import include,url
 # from django.contrib import admin
 
 from rental.views import login
+from rental.views import worker
+from rental.views import index
 
 urlpatterns = [
     url(r'^$',include('rental.urls')),
     url(r'^admin/', admin.site.urls),
-    url(r'login/',login)
+    url(r'login.html/',login),
+    url(r'login/',login),
+    url(r'worker/',worker)
 ]
