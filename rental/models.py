@@ -10,7 +10,8 @@ class Test(models.Model):
         verbose_name=('test')
 
 class Store(models.Model):
-    Snumber=models.CharField(primary_key=True,max_length=20)
+    Sid=models.AutoField(primary_key=True)
+    Snumber=models.CharField(max_length=20)
     Sname=models.CharField(max_length=10)
     Saddress=models.CharField(max_length=50)
     Stel=models.CharField(max_length=13)
@@ -21,10 +22,10 @@ class Store(models.Model):
         verbose_name=('stores')
 
 class Worker(models.Model):
-    id=models.IntegerField(primary_key=True)
+    id=models.AutoField(primary_key=True)
     FSnumber=models.ForeignKey(Store,related_name='Snumber_foreign')
     Wname=models.CharField(max_length=10)
-    Wtel=models.CharField(max_length=13)
+    Wtel=models.CharField(max_length=13,null=True)
     Wsecret=models.CharField(max_length=15)
     WIDnumber=models.CharField(max_length=18)
     Wtittle=models.CharField(max_length=10)
@@ -32,26 +33,25 @@ class Worker(models.Model):
         verbose_name=('workers')
 
 class Cartype(models.Model):
-    CTnumber=models.CharField(primary_key=True,max_length=15)#车型编号，主码
+    CTnumber=models.AutoField(primary_key=True)#车型编号，主码
     CTbrand=models.CharField(max_length=15) #车的类型
     CTprice=models.FloatField()     #基本价格
     CTcost=models.FloatField()      #押金
     CTseats=models.IntegerField()   #座位数
     CTengine=models.CharField(max_length=10)    #引擎号
     CTgears=models.BooleanField()   #是否为自动挡
-    CTdrawway=models.CharField(max_length=15)   #图片路径
+    CTdrawway=models.CharField(max_length=15,null=True)   #图片路径
     CTaddtime=models.DateField()            #增加时间
     CTperson=models.ForeignKey(Worker,related_name='addPerson')
     class Meta:
         verbose_name=('cartypes')
 
 class Car(models.Model):
-    Cid=models.IntegerField(primary_key=True)
+    Cid=models.AutoField(primary_key=True)
     Cnumber=models.CharField(max_length=10)
     Clicense=models.CharField(max_length=10)        
     Cpurchase=models.DateField()
     Cseller=models.CharField(max_length=50)
-    Csettime=models.DateField()
     Csettime=models.DateField()
     Cuse=models.BooleanField()
     Wnumber=models.ForeignKey(Worker,related_name='addperson')
@@ -66,12 +66,12 @@ class Order(models.Model):
     Preturntime=models.DateField()
     Freturntime=models.DateField()
     Finpay=models.FloatField()
-    Conpay=models.FloatField()
+    Conpay=models.FloatField(null=True)
     DamageDeposit=models.FloatField()
     RentDeposit=models.FloatField()
     IllegalDeposit=models.FloatField()
-    DamageMoney=models.FloatField()
-    IllegalMoney=models.FloatField()
+    DamageMoney=models.FloatField(null=True)
+    IllegalMoney=models.FloatField(null=True)  
     OrderStatus=models.IntegerField()
     Wnumber=models.ForeignKey(Worker,related_name='worker')
     Cnumber=models.ForeignKey(Car,related_name='carnum')   
@@ -79,7 +79,7 @@ class Order(models.Model):
         verbose_name=('orders')    
     
 class ConRent(models.Model):
-    ConID=models.IntegerField(primary_key=True)
+    ConID=models.AutoField(primary_key=True)
     ConStartTime=models.DateField()
     ConEndTime=models.DateField()
     CONpay=models.FloatField()
@@ -88,7 +88,7 @@ class ConRent(models.Model):
         verbose_name=('conrents')      
 
 class Illegal(models.Model):
-    IllID=models.IntegerField(primary_key=True)
+    IllID=models.AutoField(primary_key=True)
     IllegalTime=models.DateField()
     IllegalMoney=models.FloatField()   
     Detail=models.CharField(max_length=50)
