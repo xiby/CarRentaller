@@ -62,6 +62,7 @@ class Car(models.Model):
 class Order(models.Model):
     OrderNO=models.CharField(primary_key=True,max_length=20)
     DriverNO=models.CharField(max_length=18)
+    Drivername=models.CharField(max_length=15,null=True)
     Starttime=models.DateField()
     Preturntime=models.DateField()
     Freturntime=models.DateField()
