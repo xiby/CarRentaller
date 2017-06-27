@@ -47,9 +47,13 @@ def login(request):
                     response.set_cookie("userid",userid)
                     return response
                 elif usertittle=='经理':
-                    return HttpResponse('经理界面')
+                    response=redirect('/manager/')
+                    response.set_cookie('userid',userid)
+                    return response
                 elif usertittle=='财务员':
-                    return HttpResponse('财务员界面')
+                    response=redirect('/account/')
+                    response.set_cookie('userid',userid)
+                    return response
                 else:
                     return HttpResponse('发生内部错误')
             else:

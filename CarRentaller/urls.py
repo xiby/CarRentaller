@@ -17,6 +17,7 @@ from django.conf.urls import url
 from django.contrib import admin
 
 from django.conf.urls import include,url
+from django.views.generic.base import RedirectView
 # from django.contrib import admin
 
 from rental.views import login
@@ -28,9 +29,14 @@ from rental.views import showRunning
 from rental.views import showWaitting
 from rental.views import showFinished
 
+from rental.view_manager import manager
+
+from rental.view_ac import account
+# url(r'^favicon.ico$','django.views.generic.simple.redirect_to',{'url':'/static/images/favicon.ico'}),
 urlpatterns = [
     url(r'^$',include('rental.urls')),
     url(r'^admin/', admin.site.urls),
+    url(r'^favicon\.ico$', RedirectView.as_view(url='/static/images/favicon.ico')),
     url(r'login.html/',login),
     url(r'login/',login),
     url(r'worker/',worker),
@@ -38,5 +44,9 @@ urlpatterns = [
     url(r'generate/',complete),
     url(r'showRunning/',showRunning),
     url(r'showWaitting/',showWaitting),
-    url(r'showFinished/',showFinished)
+    url(r'showFinished/',showFinished),
+
+    url(r'manager/',manager),
+
+    url(r'account/',account)
 ]
