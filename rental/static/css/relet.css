@@ -1,0 +1,59 @@
+* {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-family: "Microsoft YaHei UI Light", serif;
+}
+
+body>.relet {
+    position: absolute;
+    top: 35%;
+    left: 50%;
+    margin-left: -150px;
+    width: 300px;
+    height: 250px;
+    text-align: center;
+    border-radius: 2px;
+    background-color: #FFFFFF;
+    border: 1px solid black;
+}
+
+body>.relet>label {
+    position: relative;
+    top: 17px;
+    font-weight: bold;
+}
+
+
+body>.relet>#relet-form {
+    margin-top: 30px;
+}
+
+body>.log>#relet-form>.input {
+    border: 1px solid black;
+    width: 280px;
+    height: 40px;
+    border-radius: 2px;
+    margin: 2px;
+}
+
+body>.log>#relet-form>.botton {
+    margin-top: 20px;
+    border: 1px solid black;
+    width: 100px;
+    height: 40px;
+    background-color: #DBDCDC;
+    border-radius: 2px;
+    margin-left: 5px;
+    font-weight: bold;
+}
+
+body>.log>#relet-form>.botton:hover {
+    background-color: #C42525;
+    color: #FFFFFF;
+}
+
+body>.log>#relet-form>.a:hover {
+    background-color: #C42525;
+    color: #FFFFFF;
+}

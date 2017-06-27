@@ -1,0 +1,38 @@
+* {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-family: "Microsoft YaHei UI Light", serif;
+}
+
+body>#content {
+    border: 2px sandybrown #000000;
+    position: relative;
+    height: 70%;
+    width: 50%;
+    margin: 1px;
+    float: center;
+}
+
+body>#content>#show-form {
+    margin: 1px
+}
+
+body>#content>#show-form>.button {
+    margin-top: 20px;
+    border: 1px solid black;
+    width: 50px;
+    height: 20px;
+    background-color: #DBDCDC;
+    border-radius: 2px;
+    margin-left: 5px;
+    font-weight: bold;
+}
+
+body>#content>#show-form p>.input {
+    border: 2px solid black;
+    width: 100px;
+    height: 20px;
+    border-radius: 2px;
+    margin: 2px;
+}

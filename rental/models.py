@@ -29,6 +29,7 @@ class Worker(models.Model):
     Wsecret=models.CharField(max_length=15)
     WIDnumber=models.CharField(max_length=18)
     Wtittle=models.CharField(max_length=10)
+    WExit=models.BooleanField()
     class Meta:
         verbose_name=('workers')
 

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta content="text/html; charset=utf-8" />
+    <title>经理页面</title>
+    <style type="text/css">
+        * {
+            margin: 0px;
+            padding: 0px;
+        }
+        
+        #nav {
+            width: 600px;
+            height: 40px;
+            margin: 0 auto;
+        }
+        
+        #nav ul {
+            list-style: none;
+        }
+        
+        #nav ul li {
+            float: right;
+            line-height: 40px;
+            text-align: right;
+            position: relative;
+        }
+        
+        #nav ul li a {
+            text-decoration: none;
+            color: #000;
+            display: block;
+            padding: 0px 10px;
+        }
+        
+        #nav ul li a:hover {
+            color: #FFF;
+            background: #333
+        }
+        
+        #nav ul li ul {
+            position: absolute;
+            display: none;
+        }
+        
+        #nav ul li ul li {
+            float: none;
+            line-height: 30px;
+            text-align: left;
+        }
+        
+        #nav ul li ul li a {
+            width: 100%;
+        }
+        
+        #nav ul li ul li a:hover {
+            background-color: #06f;
+        }
+        
+        #nav ul li:hover ul {
+            display: block
+        }
+        
+        #nav ul li ul li button {
+            background: #333;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<div id="nav">
+    <ul>
+        <li><a href="/manager/">{{data}}</a>
+            <ul>
+                <li><button name="logout" value="退出登陆" /></li>
+            </ul>
+            <li><a href="#">员工管理</a>
+                <ul>
+                    <li><a href="/manager/addWorker/">增加员工</a></li>
+                    <li><a href="/manager/dropworker/">开除员工</a></li>
+                    <li><a href="#">查看所有</a></li>
+                </ul>
+            </li>
+            <li><a href="#">车辆管理</a>
+                <ul>
+                    <li><a href='#'>增加车辆</a></li>
+                    <li><a href='#'>车辆报废</a></li>
+                    <li><a href='#'>查看车辆</a></li>
+                </ul>
+            </li>
+    </ul>
+</div>
+
+<body>
+</body>
+
+</html>

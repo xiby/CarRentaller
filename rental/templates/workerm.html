@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>员工管理</title>
+    <link rel="stylesheet" href="/static/css/workerm.css" type="text/css">
+</head>
+
+<body>
+    <div id="content">
+        <label>增加员工</label>
+        <form method="post" id="show-form">
+            <p><label>工作店号：</label>
+                <input class="input" type="number" name="snumber" /></p>
+            <p><label>姓名：</label>
+                <input class="input" type="text" name="wname" /></p>
+            <p><label>电话：</label>
+                <input class="input" type="text" name="wtel" /></p>
+            <p><label>登录密码：</label>
+                <input class="input" type="text" name="wpasw" /></p>
+            <p><label>身份证号：</label>
+                <input class="input" type="text" name="widnum" /></p>
+            <input class="button" type="submit" name="addworker" value="增加员工">
+
+            <p><label>查询</label></p>
+            <p><label>职工号：</label>
+                <input class="input" type="text" name="wnumber" /></p>
+            <input class="button" type="submit" name="showworker" value="查询">
+        </form>
+    </div>
+</body>
+
+</html>

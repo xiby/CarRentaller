@@ -22,6 +22,6 @@ cursor=connection.cursor()
 
 def account(request):
     if request.method=='GET':
-        return HttpResponse('Hello I am an account!')
+        return render(request,'manager.html')
     else:
         return HttpResponse('ERROR')

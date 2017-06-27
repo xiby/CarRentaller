@@ -30,6 +30,9 @@ from rental.views import showWaitting
 from rental.views import showFinished
 
 from rental.view_manager import manager
+from rental.view_manager import workerm
+from rental.view_manager import addworker
+from rental.view_manager import dropworker
 
 from rental.view_ac import account
 # url(r'^favicon.ico$','django.views.generic.simple.redirect_to',{'url':'/static/images/favicon.ico'}),
@@ -37,16 +40,18 @@ urlpatterns = [
     url(r'^$',include('rental.urls')),
     url(r'^admin/', admin.site.urls),
     url(r'^favicon\.ico$', RedirectView.as_view(url='/static/images/favicon.ico')),
-    url(r'login.html/',login),
     url(r'login/',login),
-    url(r'worker/',worker),
+    url(r'^worker/$',worker),
     url(r'show/',showAOrders),
     url(r'generate/',complete),
     url(r'showRunning/',showRunning),
     url(r'showWaitting/',showWaitting),
     url(r'showFinished/',showFinished),
 
-    url(r'manager/',manager),
+    url(r'^manager/addWorker/$',addworker),
+    url(r'^manager/dropworker/$',dropworker),
+    url(r'^manager/$',manager),
+    
 
-    url(r'account/',account)
+    url(r'account/',account),
 ]

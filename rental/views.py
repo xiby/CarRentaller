@@ -383,6 +383,3 @@ def finish(orderID):
     where OrderNO='''+"'"+orderID+"'"
     cursor.execute(sql)
     cursor.commit()
-
-
-        

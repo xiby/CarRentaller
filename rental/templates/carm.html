@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>车辆管理</title>
+    <link rel="stylesheet" href="/static/css/carm.css" type="text/css">
+</head>
+
+<body>
+    <div id="content">
+        <label>新车入库</label>
+        <form method="post" id="show-form">
+            <p><label>车牌号：</label>
+                <input class="input" type="text" name="clicense" /></p>
+            <p><label>购买日期：</label>
+                <input class="input" type="text" name="cpurchase" /></p>
+            <p><label>销售商：</label>
+                <input class="input" type="text" name="cseller" /></p>
+            <p><label>添加时间：</label>
+                <input class="input" type="text" name="csettime" /></p>
+            <p><label>操作人员：</label>
+                <input class="input" type="text" name="wname" /></p>                           
+            <input class="button" type="submit" name="addcar" value="增加车辆">
+            
+            <p><label>查询</label></p>
+            <p><label>车牌号：</label>
+                <input class="input" type="text" name="clicense" /></p>                              
+            <input class="button" type="submit" name="showcar" value="查询">
+            <input class="button" type="submit" name="fixcar" value="送修">    
+            <input class="button" type="submit" name="deletecar" value="删除车辆">        
+        </form>
+    </div>
+</body>
+
+</html>
