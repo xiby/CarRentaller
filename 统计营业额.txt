@@ -1,0 +1,24 @@
+--统计日营业额
+SELECT datename(yyyy,jieshushijian) 年,datename(mm,jieshushijian) 月,datename(dd,jieshushijian) 日,SUM(zujin)+SUM(xuzu) 营业额
+FROM dingdan
+WHERE zhuangtai='已完成'
+GROUP BY datename(mm,jieshushijian),datename(yyyy,jieshushijian),datename(dd,jieshushijian);
+
+--统计月营业额
+SELECT datename(yyyy,jieshushijian) 年,datename(mm,jieshushijian) 月,SUM(zujin)+SUM(xuzu) 营业额
+FROM dingdan
+WHERE zhuangtai='已完成'
+GROUP BY datename(mm,jieshushijian),datename(yyyy,jieshushijian);
+
+--统计年营业额
+SELECT datename(yyyy,jieshushijian) 年,SUM(zujin)+SUM(xuzu) 营业额
+FROM dingdan
+WHERE zhuangtai='已完成'
+GROUP BY datename(yyyy,jieshushijian);
+
+--统计各门店营业额
+SELECT SUBSTRING(dingdanhao,8,4) 门店号,SUM(zujin)+SUM(xuzu) 营业额
+FROM dingdan
+WHERE zhuangtai='已完成'
+GROUP BY SUBSTRING(dingdanhao,8,4);
+--SUBSTRING是从订单号中提取出门店号，8是要提取的启示位置，4是提取的字符串的长度
