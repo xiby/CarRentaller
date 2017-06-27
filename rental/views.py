@@ -66,9 +66,22 @@ def login(request):
 
 def findcars(datelist,cars):             #查询满足时间条件的车辆
     ans=list()
+    tmp=list()
+    d=dict()
     for item in cars:
-        if datelist[0]>item[8] or datelist[1]<item[7]:
-            ans.append(item)
+        if item[0] not in d.keys():
+            d[item[0]]=list()
+        d[item[0]].append(list([item[7],item[8]]))
+    for item in d.keys():
+        for val in d[item]:
+            if(datelist[0]<val[1] and datelist[0]>val[0]) or (datelist[1]<val[1] and datelist[1]>val[0]):
+                break
+        else:
+            tmp.append(item)
+    for item in cars:
+        for cnum in tmp:
+            if(item[0]==cnum):
+                ans.append(item)
     return ans
 
 def getCartypeInfo(brand,seats,gears,datelist):

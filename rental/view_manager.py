@@ -18,4 +18,7 @@ cursor=connection.cursor()
 # import models
 
 def manager(request):
-    return HttpResponse("hello")
+    if request.method=='GET':
+        return HttpResponse("hello")
+    else:
+        return HttpResponse('ERROR')
