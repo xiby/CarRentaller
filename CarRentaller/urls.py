@@ -25,6 +25,9 @@ from rental.views import index
 from rental.views import showAOrders
 from rental.views import complete
 from rental.views import showRunning
+from rental.views import showWaitting
+from rental.views import showFinished
+
 urlpatterns = [
     url(r'^$',include('rental.urls')),
     url(r'^admin/', admin.site.urls),
@@ -34,4 +37,6 @@ urlpatterns = [
     url(r'show/',showAOrders),
     url(r'generate/',complete),
     url(r'showRunning/',showRunning),
+    url(r'showWaitting/',showWaitting),
+    url(r'showFinished/',showFinished)
 ]

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>已完成订单</title>
+</head>
+
+<body>
+    <h1>已经完成的订单信息</h1>
+    <table border="1">
+        <thead>
+            <th>订单号</th>
+            <th>车辆编号</th>
+            <th>司机驾照号</th>
+            <th>司机姓名</th>
+            <th>正常租金</th>
+            <th>续租租金</th>
+            <th>车损押金</th>
+            <th>租车押金</th>
+            <th>违章押金</th>
+            <th>车损金额</th>
+            <th>违章金额</th>
+            <th>订单完成日期</th>
+            <th>还车日期</th>
+        </thead>
+        <tbody>
+            {%for item in data%}
+            <tr>
+                <td>{{item.orderID}}</td>
+                <td>{{item.Cid}}</td>
+                <td>{{item.DriverNO}}</td>
+                <td>{{item.Drivername}}</td>
+                <td>{{item.Finpay}}</td>
+                <td>{{item.Conpay}}</td>
+                <td>{{item.DamageDeposit}}</td>
+                <td>{{item.RentDeposit}}</td>
+                <td>{{item.IllegalDeposit}}</td>
+                <td>{{item.DamageMoney}}</td>
+                <td>{{item.IllegalMoney}}</td>
+                <td>{{item.completedate}}</td>
+                <td>{{item.returndate}}</td>
+            </tr>
+            {%endfor%}
+        </tbody>
+    </table>
+</body>
+
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>换车信息</title>
+</head>
+
+<body>
+    <div>
+        <h1>订单信息显示</h1>
+        <table border="1">
+            <thead>
+                <th>订单号</th>
+                <th>车辆id</th>
+                <th>司机姓名</th>
+                <th>完成日期</th>
+                <th>归还时间</th>
+                <th>订单状态</th>
+            </thead>
+            <tbody>
+                {%for line in data%}
+                <tr>
+                    <td>{{line.OrderNO}}</td>
+                    <td>{{line.cid}}</td>
+                    <td>{{line.Drivername}}</td>
+                    <td>{{line.completedate}}</td>
+                    <td>{{line.frereturndate}}</td>
+                    <td>{{line.status}}</td>
+                </tr>
+                {%endfor%}
+            </tbody>
+        </table>
+    </div>
+    <div>
+        <h1>填写要完成的订单</h1>
+        <form method="post">
+            <label>订单号：</label>
+            <input type="number" min="0" name="orderID" placeholder="输入17位订单号" />
+            <input type="submit" name="confirm" value="confirm" />
+        </form>
+    </div>
+</body>
+
+</html>

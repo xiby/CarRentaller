@@ -230,15 +230,18 @@ def doConRent(orderID,interval):
         cartype=Cartype.objects.get(CTnumber=car.CTnumber.CTnumber)
         price=cartype.CTprice
         pay=price*interval
+        order.Conpay=order.Conpay+pay
         newConrent=ConRent(ConStartTime=order.Preturntime,ConEndTime=End,CONpay=pay,OrderNO=order)
+        order.save()
         newConrent.save()
+        return True
     except ObjectDoesNotExist:
-        return HttpResponse('ERROR')
+        return False
 
 def showRunning(request):
     if request.method=='GET':
         sql='''select * from rental_order
-        where OrderStatus=1 and Cnumber_id='''+str(request.COOKIES['userid'])
+        where OrderStatus=1 and Cnumber_id='''+str(request.COOKIES['userid']) 
         cursor.execute(sql)
         ans=cursor.fetchall()
         data=list()
@@ -258,14 +261,22 @@ def showRunning(request):
             # days=int(request.POST['days'])            ##########
             days=7
             orderID=request.POST['orderNO']
-            doConRent(orderID,days)
-            return render(request,'success.html',{"data":'/showRunning/'})
+            if doConRent(orderID,days):
+                return render(request,'success.html',{"data":'/showRunning/'})
+            else:
+                return HttpResponse('ERROR')
         elif 'Back' in request.POST:
             orderNO=request.POST['BackOrderNO']
             try:
                 order=Order.objects.get(OrderNO=orderNO)
-                order.OrderStatus=2
-                order.save()
+                now=datetime.datetime.now().date()
+                if order.OrderStatus==1:
+                    order.OrderStatus=2
+                    order.Freturntime=now
+                    order.save()
+                    return render(request,'success.html',{'data':'/showRunning/'})
+                else:
+                    return HttpResponse('请检查输入订单号的状态')
             except ObjectDoesNotExist:
                 return HttpResponse("该订单不存在")
         else:
@@ -273,6 +284,68 @@ def showRunning(request):
     else:
         return HttpResponse("ERROR")
 
+def getWaitting(userid):
+    sql='''select * from rental_order
+    where OrderStatus=2 and Cnumber_id='''+userid
+    cursor.execute(sql)
+    ans=cursor.fetchall()
+    data=list()
+    for item in ans:
+        tmp=dict()
+        tmp['OrderNO']=item[0]
+        tmp['cid']=item[13]
+        tmp['Drivername']=item[15]
+        tmp['completedate']=item[16].strftime('%Y-%m-%d')
+        tmp['frereturndate']=item[4].strftime('%Y-%m-%d')
+        tmp['status']=status[item[12]]
+        print(tmp['completedate'])
+        data.append(tmp)
+    return data
+def showWaitting(request):
+    if request.method=='GET':
+        return render(request,'showWaitting.html',{"data":getWaitting(request.COOKIES['userid'])})
+    elif request.method=='POST':
+        if 'confirm' in request.POST:
+            orderID=str(request.POST['orderID'])
+            print(type(orderID),orderID)
+            try:
+                tmporder=Order.objects.get(OrderNO=orderID,OrderStatus=2)
+                tmporder.OrderStatus=3
+                tmporder.save()
+                return render(request,'success.html',{"data":'/showWaitting/'})
+            except ObjectDoesNotExist:
+                return HttpResponse("请检查订单号")
+    else:
+        return HttpResponse('ERROR')
+
+def getFinished(userid):
+    sql='select * from rental_order where OrderStatus=3 and Wnumber_id='+userid
+    cursor.execute(sql)
+    ans=cursor.fetchall()
+    data=list()
+    for item in ans:
+        tmp=dict()
+        tmp['orderID']=item[0]
+        tmp['DriverNO']=item[1]
+        tmp['Drivername']=item[15]
+        tmp['Finpay']=item[5]
+        tmp['Conpay']=item[6]
+        tmp['DamageDeposit']=item[7]
+        tmp['RentDeposit']=item[8]
+        tmp['IllegalDeposit']=item[9]
+        tmp['DamageMoney']=item[10]
+        tmp['IllegalMoney']=item[11]
+        tmp['Cid']=item[13]
+        tmp['completedate']=item[16]
+        tmp['returndate']=item[4]
+        data.append(tmp)
+    return data
+def showFinished(request):
+    if request.method=='GET':
+        data=getFinished(request.COOKIES['userid'])
+        return render(request,'showFinished.html',{'data':data})
+    else:
+        return HttpResponse('Hello')
 def fetchCar(orderID):
     sql='''update rental_order
     set OrderState=1
