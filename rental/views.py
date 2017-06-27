@@ -1,3 +1,9 @@
+
+'''
+可能的解决方法：先查询，然后在完成订单时输入查询到的车辆编号
+                在续租的时候也可以采用该处理方法
+'''
+
 from django.shortcuts import render
 
 # Create your views here.
@@ -12,12 +18,14 @@ from rental.models import Car
 from rental.models import Order
 from rental.models import ConRent
 from rental.models import Illegal
+from rental.models import Test
 
-from datetime import datetime
+import datetime
 
 from django.db import connection
+cursor=connection.cursor()
 # import models
-
+status={0:'待取车',1:'进行中',2:'待验收',4:'已完成'}
 def index(request):
     return render(request,'login.html')
 
@@ -36,6 +44,7 @@ def login(request):
             if user.Wsecret==request.POST['password']:
                 if usertittle=='职工':
                     response=redirect('/worker/')
+                    response.set_cookie("userid",userid)
                     return response
                 elif usertittle=='经理':
                     return HttpResponse('经理界面')
@@ -64,7 +73,7 @@ def getCartypeInfo(brand,seats,gears,datelist):
     else:
         gears=True
     cursor=connection.cursor()
-    sql='''select Cnumber,CTbrand,CTseats,CTgears,CTprice,CTcost,CTdrawway,Starttime,Preturntime 
+    sql='''select Cnumber,CTbrand,CTseats,CTgears,CTprice,CTcost,CTdrawway,Starttime,Preturntime,Cid 
     from rental_car,rental_cartype,rental_order 
     where rental_car.CTnumber_id=rental_cartype.CTnumber 
     and rental_order.Cnumber_id=rental_car.Cid and rental_order.OrderStatus>1'''
@@ -81,10 +90,19 @@ def getCartypeInfo(brand,seats,gears,datelist):
         tmp['CTprice']=item[4]
         tmp['CTcost']=item[5]
         tmp['CTdraway']=item[6]
+        tmp['cid']=item[9]
         l.append(tmp)
     return l
 
+def loggout(request):
+    response=redirect('/login/')
+    response.delete_cookie('userid')
+    return response
+
 def worker(request):
+    if request.method=='POST':
+        for item in request.POST:
+            print(item)
     if request.method=='GET':
         return render(request,'worker.html')
     elif request.method=='POST' and 'showtype' in request.POST:
@@ -92,11 +110,189 @@ def worker(request):
         seats=(request.POST['seats'])
         gears=request.POST['gears']
         timelist=list()
-        timelist.append(datetime.strptime(request.POST['startdate'],'%Y-%m-%d').date())
-        timelist.append(datetime.strptime(request.POST['enddate'],'%Y-%m-%d').date())
+        timelist.append(datetime.datetime.strptime(request.POST['startdate'],'%Y-%m-%d').date())
+        timelist.append(datetime.datetime.strptime(request.POST['enddate'],'%Y-%m-%d').date())
+        # print(type(request.POST['startdate']))
+        #先以字符串的格式存储到session中，然后需要用到的时候再转换成时间的格式
+        request.session['startdate']=request.POST['startdate']
+        request.session['enddate']=request.POST['enddate']
         ans=getCartypeInfo(brand,seats,gears,timelist)
-        
         return render(request,'showcars.html',{"data":ans})
+    elif request.method=='POST' and 'confirm' in request.POST:
+        print('hehe')
+        return redirect('/generate/')
     else:
         return HttpResponse("ERROR")
+
+def complete(request):
+    if request.method=='GET':
+        return render(request,'completeorder.html')
+    elif request.method=='POST' and 'confirm' in request.POST:
+        #此时根据cookie 以及session里面的内容来生成订单信息
+        userid=request.COOKIES['userid']
+        try:
+            user=Worker.objects.get(id=userid)
+            storeID=user.FSnumber_id
+            orderID=''+str(storeID)
+            date_now=datetime.datetime.now()
+            date_now_str=date_now.strftime('%Y%m%d')
+            orderID=orderID+date_now_str
+            sql='select count(OrderNO) from rental_order where Completedate='+"'"+date_now_str+"'"
+            cursor=connection.cursor()
+            cursor.execute(sql)
+            ans=cursor.fetchall()
+            orderID=orderID+str(ans[0][0]+1).zfill(4)
+            #订单号填充完成
+            driverName=request.POST['DName']
+            driverNO=request.POST['DNo']
+            startdate=datetime.datetime.strptime(request.session['startdate'],'%Y-%m-%d')
+            enddate=datetime.datetime.strptime(request.session['enddate'],'%Y-%m-%d')
+            completedate=date_now.date()
+            cid=request.POST['carid']
+            #查询出该车的单价以及各种押金
+            print(cid)
+            sql='''select CTprice,CTcost from rental_car,rental_cartype 
+            where rental_car.CTnumber_id=rental_cartype.CTnumber and rental_car.Cid='''+cid
+            cursor.execute(sql)
+            ans=cursor.fetchall()
+            print(ans)
+            price=ans[0][0]     #日租金
+            pay=price*(enddate-startdate).days
+            deposit=ans[0][1]   #押金
+            state=0
+            damagedeposit=1000
+            rentdeposit=1000
+            illegaldeposit=1000
+            damagemonet=0
+            illegalmoney=0
+            # sql='insert into rental_order values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)'
+            neworder=Order(orderID,
+            driverNO,
+            driverName,
+            completedate,
+            startdate,
+            enddate,
+            enddate,
+            pay,
+            0,
+            damagedeposit,
+            rentdeposit,
+            illegaldeposit,
+            0,0,0,
+            userid,cid)
+            neworder.save()
+            return render(request,'success.html',{'data':'/worker/'})
+        except ObjectDoesNotExist:
+            return HttpResponse('ERROR')
+def showAOrders(request):
+    if request.method=='GET':
+        sql='''select * from rental_order
+        where OrderStatus=0 and Cnumber_id='''+str(request.COOKIES['userid'])
+        cursor.execute(sql)
+        ans=cursor.fetchall()
+        # print(ans)
+        #查询出所有的预约单
+        data=list()
+        for item in ans:
+            tmp=dict()
+            tmp['OrderNO']=item[0]
+            tmp['cid']=item[13]
+            tmp['Drivername']=item[15]
+            tmp['completedate']=item[16].strftime('%Y-%m-%d')
+            print(tmp['completedate'])
+            data.append(tmp)
+        return render(request,'showAOrders.html',{"data":data})
+    elif request.method=='POST' and 'delete' in request.POST:
+        orderid=request.POST['Cancelorderid']
+        try:
+            Order.objects.get(OrderNO=orderid).delete()
+            return render(request,'success.html',{'data':'/show/'})
+        except ObjectDoesNotExist:
+            return HttpResponse("该订单号不存在")
+    elif request.method=='POST' and 'confirm' in request.POST:
+        orderid=request.POST['Confirmorderid']
+        try:
+            order=Order.objects.get(OrderNO=orderid)
+            order.OrderStatus=1
+            order.save()
+            return render(request,'success.html',{'data':'/show/'})
+        except ObjectDoesNotExist:
+            return HttpResponse('该订单号不存在')
+
+def doConRent(orderID,interval):
+    Now=datetime.datetime.now().date()
+    End=Now+datetime.timedelta(days=interval)
+    Now_str=Now.strftime('%Y-%m-%d')
+    End_str=End.strftime('%Y-%m-%d')
+    try:
+        order=Order.objects.get(OrderNO=orderID)
+        car=Car.objects.get(Cid=order.Cnumber.Cid)
+        cartype=Cartype.objects.get(CTnumber=car.CTnumber.CTnumber)
+        price=cartype.CTprice
+        pay=price*interval
+        newConrent=ConRent(ConStartTime=order.Preturntime,ConEndTime=End,CONpay=pay,OrderNO=order)
+        newConrent.save()
+    except ObjectDoesNotExist:
+        return HttpResponse('ERROR')
+
+def showRunning(request):
+    if request.method=='GET':
+        sql='''select * from rental_order
+        where OrderStatus=1 and Cnumber_id='''+str(request.COOKIES['userid'])
+        cursor.execute(sql)
+        ans=cursor.fetchall()
+        data=list()
+        for item in ans:
+            tmp=dict()
+            tmp['OrderNO']=item[0]
+            tmp['cid']=item[13]
+            tmp['Drivername']=item[15]
+            tmp['completedate']=item[16].strftime('%Y-%m-%d')
+            tmp['prereturndate']=item[3].strftime('%Y-%m-%d')
+            tmp['status']=status[item[12]]
+            print(tmp['completedate'])
+            data.append(tmp)
+        return render(request,'showRunning.html',{'data':data})
+    elif request.method=='POST':
+        if 'conrent' in request.POST:
+            # days=int(request.POST['days'])            ##########
+            days=7
+            orderID=request.POST['orderNO']
+            doConRent(orderID,days)
+            return render(request,'success.html',{"data":'/showRunning/'})
+        elif 'Back' in request.POST:
+            orderNO=request.POST['BackOrderNO']
+            try:
+                order=Order.objects.get(OrderNO=orderNO)
+                order.OrderStatus=2
+                order.save()
+            except ObjectDoesNotExist:
+                return HttpResponse("该订单不存在")
+        else:
+            return HttpResponse("ERROR!")
+    else:
+        return HttpResponse("ERROR")
+
+def fetchCar(orderID):
+    sql='''update rental_order
+    set OrderState=1
+    where OrderNO='''+"'"+orderID+"'"
+    cursor.execute(sql)
+    cursor.commit()
+
+def returnCar(orderID):
+    sql='''update rental_order
+    set OrderState=2
+    where OrderNO='''+"'"+orderID+"'"
+    cursor.execute(sql)
+    cursor.commit()
+
+def finish(orderID):
+    sql='''update rental_order
+    set OrderState=3
+    where OrderNO='''+"'"+orderID+"'"
+    cursor.execute(sql)
+    cursor.commit()
+
+
         

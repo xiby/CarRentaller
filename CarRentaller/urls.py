@@ -22,11 +22,16 @@ from django.conf.urls import include,url
 from rental.views import login
 from rental.views import worker
 from rental.views import index
-
+from rental.views import showAOrders
+from rental.views import complete
+from rental.views import showRunning
 urlpatterns = [
     url(r'^$',include('rental.urls')),
     url(r'^admin/', admin.site.urls),
     url(r'login.html/',login),
     url(r'login/',login),
-    url(r'worker/',worker)
+    url(r'worker/',worker),
+    url(r'show/',showAOrders),
+    url(r'generate/',complete),
+    url(r'showRunning/',showRunning),
 ]

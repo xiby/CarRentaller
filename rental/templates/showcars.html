@@ -9,6 +9,7 @@
     <h1>满足条件的车辆信息</h1>
     <table border="1">
         <thead>
+            <th>车辆ID</th>
             <th>车牌号</th>
             <th>品牌</th>
             <th>座位数</th>
@@ -21,13 +22,19 @@
         <tbody>
             {%for line in data%}
             <tr>
+                <td>{{line.cid}}</td>
                 <td>{{line.Cnumber}}</td>
                 <td>{{line.CTbrand}}</td>
                 <td>{{line.CTseats}}</td>
                 <td>{{line.CTgears}}</td>
                 <td>{{line.CTprice}}</td>
                 <td>{{line.CTcost}}</td>
-                <td><input type="button" method="post" value="confirm" name={{line.Cnumber}}></td>
+
+                <td>
+                    <form method="post">
+                        <input type="submit" value="confirm" name="confirm"></input>
+                    </form>
+                </td>
             </tr>
             {% endfor %}
         </tbody>

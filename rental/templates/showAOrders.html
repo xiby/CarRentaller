@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>显示预约单</title>
+</head>
+
+<body>
+    <table border="1">
+        <thead>
+            <th>订单号</th>
+            <th>车辆号</th>
+            <th>驾驶员</th>
+            <th>下单日期</th>
+        </thead>
+        <tbody>
+            {%for item in data%}
+            <tr>
+                <td>{{item.OrderNO}}</td>
+                <td>{{item.cid}}</td>
+                <td>{{item.Drivername}}</td>
+                <td>{{item.completedate}}</td>
+            </tr>
+            {%endfor%}
+        </tbody>
+    </table>
+
+    <form method="post">
+        <label>要取消的订单号</label>
+        <input type="text" name="Cancelorderid" />
+        <input type="submit" name="delete" value="确认取消" />
+    </form>
+    <form method="post">
+        <label>要取车的订单号</label>
+        <input type="text" name="Confirmorderid" />
+        <input type="submit" name="confirm" value="确认取车" />
+    </form>
+
+</body>
+
+</html>
