@@ -34,6 +34,10 @@ from rental.view_manager import workerm
 from rental.view_manager import addworker
 from rental.view_manager import dropworker
 from rental.view_manager import showAll
+from rental.view_manager import addCar
+from rental.view_manager import dropCar
+from rental.view_manager import ctmanager
+
 from rental.view_ac import account
 # url(r'^favicon.ico$','django.views.generic.simple.redirect_to',{'url':'/static/images/favicon.ico'}),
 urlpatterns = [
@@ -51,6 +55,9 @@ urlpatterns = [
     url(r'^manager/addWorker/$',addworker),
     url(r'^manager/dropworker/$',dropworker),
     url(r'^manager/showall/$',showAll),
+    url(r'^manager/addCar',addCar),
+    url(r'^manager/dropCar',dropCar),
+    url(r'manager/ctmanager',ctmanager),
     url(r'^manager/$',manager),
     
 

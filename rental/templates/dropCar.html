@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>删除车辆</title>
+</head>
+
+<body>
+    <div>
+        <h1>所有车辆信息</h1>
+        <table border="1">
+            <thead>
+                <th>车辆id</th>
+                <th>车牌号</th>
+                <th>保单号</th>
+                <th>销售商</th>
+                <th>操作员工</th>
+                <th>车型信息</th>
+            </thead>
+            <tbody>
+                {%for item in cars%}
+                <tr>
+                    <td>{{item.Cid}}</td>
+                    <td>{{item.Cnumber}}</td>
+                    <td>{{item.Clicense}}</td>
+                    <td>{{item.Cseller}}</td>
+                    <td>{{item.Wnumber.Wname}}</td>
+                    <td>{{item.CTnumber.CTbrand}}</td>
+                </tr>
+                {%endfor%}
+            </tbody>
+        </table>
+        <h1>填写要删除的车辆的信息</h1>
+        <form method="post">
+            <label>要删除的车辆id</label>
+            <input type="number" name="cid" min="0" />
+            <input type="submit" name="confirm" value="确认" />
+            <input type="reset" name="reset" value="重置" />
+        </form>
+    </div>
+
+</body>
+
+</html>

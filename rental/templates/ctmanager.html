@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>车型管理</title>
+</head>
+
+<body>
+    <h1>车型信息显示</h1>
+    <table border=1>
+        <thead>
+            <th>车型编号</th>
+            <th>车品牌</th>
+            <th>基本价格</th>
+            <th>押金</th>
+            <th>座位数</th>
+            <th>引擎号</th>
+            <th>是否为自动挡</th>
+        </thead>
+        <tbody>
+            {%for item in cartype%}
+            <tr>
+                <td>{{item.CTnumber}}</td>
+                <td>{{item.CTbrand}}</td>
+                <td>{{item.CTprice}}</td>
+                <td>{{item.CTcost}}</td>
+                <td>{{item.CTseats}}</td>
+                <td>{{item.CTengine}}</td>
+                <td>{{item.CTgears}}</td>
+            </tr>
+            {%endfor%}
+        </tbody>
+    </table>
+    <h1>修改车型价格</h1>
+    <form method="post">
+        <p>
+            <label>要修改的车型编号</label>
+            <input type="number" name="ctid" min="0" />
+        </p>
+        <p>
+            <label>基本价格的更改</label>
+            <input type="number" name="cost" min="0" />
+        </p>
+        <p>
+            <label>押金的更改</label>
+            <input type="number" name="deposit" min='0' />
+        </p>
+        <p>
+            <input type="submit" name="confirm" value="confirm" />
+        </p>
+    </form>
+    <h1>添加车型</h1>
+    <form method="post">
+        <p>
+            <label>车牌</label>
+            <input type="text" name="brand" />
+        </p>
+        <p>
+            <label>基本价格</label>
+            <input type="number" name='price' min="0" />
+        </p>
+        <p>
+            <label>押金</label>
+            <input type="number" name="deposit" min="0" />
+        </p>
+        <p>
+            <label>引擎类型</label>
+            <input type="text" name="engine" />
+        </p>
+        <p>
+            <label>挡位选择</label>
+            <select name='gears'>
+                <option value="1">自动挡</option>
+                <option value="0">手动挡</option>
+            </select>
+        </p>
+        <p>
+            <input type="submit" name='addconfig' value="confirm" />
+        </p>
+    </form>
+</body>
+
+</html>

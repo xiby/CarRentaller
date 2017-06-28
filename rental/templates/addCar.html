@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>增加车辆</title>
+</head>
+
+<body>
+    <div>
+        <h1>增加车辆界面</h1>
+        <form method="post">
+            <p><label>选择车型编号  </label>
+                <select name="choice">
+                    {%for item in data%}
+                    <option name="choice" value={{item}}>{{item}}</option>
+                    {%endfor%}
+                </select>
+            </p>
+            <p>
+                <label>输入车牌号  </label>
+                <input type="text" name="carid" />
+            </p>
+            <p>
+                <label>输入保单号  </label>
+                <input type="text" name="clicense" />
+            </p>
+            <p>
+                <label>输入卖家   </label>
+                <input type="text" name="cseller" />
+            </p>
+            <p>
+                <label>输入购买日期</label>
+                <input type="date" name="pdate" />
+                <p>
+                    <input type="submit" name="confirm" value="确认" />
+                    <input type="reset" name="reset" value="重置" />
+                </p>
+        </form>
+        <div>
+</body>
+
+</html>
