@@ -3,11 +3,34 @@
 
 <head>
     <meta charset="utf-8">
+    <meta content="text/html"/>
     <title>员工界面</title>
-    <link rel="stylesheet" href="/static/css/worker.css" type="text/css">
+    <!--<link rel="stylesheet" href="/static/css/worker.css" type="text/css">-->
+     <link rel="stylesheet" href="./css/form.css" type="text/css">
 </head>
-
+<div id="nav">
+    <ul>
+            <li><a href="/worker/">首页</a>
+            </li>
+            <li><a href="#">订单管理</a>
+                <ul>
+                    <li><a href='/generate/'>产生订单</a></li>
+                    <li><a href='/show/'>预约订单</a></li>
+                </ul>
+            </li>
+            <li><a href="#">订单查询</a>
+                <ul>
+                    <li><a href='/showRunning/'>进行中</a></li>
+                    <li><a href='/showWaitting/'>等待验收</a></li>
+                    <li><a href='/showFinished/'>已完成</a></li>
+                </ul>
+            </li>
+            <li><a href="/worker/">{{data}}</a>
+            </li>
+    </ul>
+ </div>   
 <body>
+<!--</div>
     <div id="nav">
         <ul>
             <li><a href="/worker/">首 页</a> | </li>
@@ -17,20 +40,25 @@
             <li><a href="/showWaitting/">等待验收</a> | </li>
             <li><a href="/showFinished/">已完成</a> </li>
         </ul>
-    </div>
-    <p/>
+    </div>-->
     <div id="content">
         <form method="post" id="show-form">
             <p><label>车型</label>
                 <input class="input" type="text" name="brand" />
-                <label>座位数</label>
+            </p>
+            <p><label>座位数</label>
                 <input class="input" type="number" name="seats" />
                 <select name="gears">
                 <option value="0">手动挡</option>
                 <option value="1">自动挡</option>
-            </select></p>
-            <input class="inputdate" type="date" name="startdate" />
-            <input class="inputdate" type="date" name="enddate" />
+                </select>
+            </p>
+            <p><label>开始时间</label>
+                <input class="inputdate" type="date" name="startdate" />
+            </p>
+            <p><label>结束时间</label>
+                <input class="inputdate" type="date" name="enddate" />
+            </p>
             <input class="button" type="submit" name="showtype">
         </form>
     </div>
