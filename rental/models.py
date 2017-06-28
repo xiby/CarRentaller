@@ -57,6 +57,7 @@ class Car(models.Model):
     Cuse=models.BooleanField()
     Wnumber=models.ForeignKey(Worker,related_name='addperson')
     CTnumber=models.ForeignKey(Cartype,related_name='typeofcar')
+    CStore=models.ForeignKey(Store,related_name='belogto')
     class Meta:
         verbose_name=('cars')
 
