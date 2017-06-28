@@ -4,8 +4,29 @@
 <head>
     <meta charset="utf-8">
     <title>订单显示</title>
+    <link rel="stylesheet" href="./css/form.css" type="text/css">
 </head>
-
+<div id="nav">
+    <ul>
+            <li><a href="/worker/">首页</a>
+            </li>
+            <li><a href="#">订单管理</a>
+                <ul>
+                    <li><a href='/generate/'>产生订单</a></li>
+                    <li><a href='/show/'>预约订单</a></li>
+                </ul>
+            </li>
+            <li><a href="#">订单查询</a>
+                <ul>
+                    <li><a href='/showRunning/'>进行中</a></li>
+                    <li><a href='/showWaitting/'>等待验收</a></li>
+                    <li><a href='/showFinished/'>已完成</a></li>
+                </ul>
+            </li>
+            <li><a href="/worker/">{{data}}</a>
+            </li>
+    </ul>
+ </div>   
 <body>
     <div>
         <h1>订单信息显示</h1>

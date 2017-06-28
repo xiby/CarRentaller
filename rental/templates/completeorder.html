@@ -2,26 +2,49 @@
 <html>
 
 <head>
+    <meta charset="utf-8">
     <title>完成订单信息</title>
-    <link href="/ststic/complete.css" type="text/css">
+    <link rel="stylesheet" href="./css/form.css" type="text/css">
 </head>
-
+<div id="nav">
+    <ul>
+            <li><a href="/worker/">首页</a>
+            </li>
+            <li><a href="#">订单管理</a>
+                <ul>
+                    <li><a href='/generate/'>产生订单</a></li>
+                    <li><a href='/show/'>预约订单</a></li>
+                </ul>
+            </li>
+            <li><a href="#">订单查询</a>
+                <ul>
+                    <li><a href='/showRunning/'>进行中</a></li>
+                    <li><a href='/showWaitting/'>等待验收</a></li>
+                    <li><a href='/showFinished/'>已完成</a></li>
+                </ul>
+            </li>
+            <li><a href="/worker/">{{data}}</a>
+            </li>
+    </ul>
+ </div>   
 <body>
-    <form method="post">
+    <div id=content>
+    <form method="post" id="show-form">
+        <p><label>车辆编号</label>
+            <input  class="input" type="text" name="carid">
+        </p>
         <p>
-            <label>车辆编号</label>
-            <input type="text" name="carid">
-            <p>
-                <label>驾驶员</label>
-                <input type="text" name="DName">
-            </p>
-            <p>
-                <label>驾驶证号</label>
-                <input type="text" name="DNo">
-            </p>
-            <input type="submit" value="确认提交" name="confirm" />
-            <input type="submit" value="  取消  " name="cancel" />
+            <label>驾驶员</label>
+            <input  class="input" type="text" name="DName">
+        </p>
+        <p>
+            <label>驾驶证号</label>
+            <input  class="input" type="text" name="DNo">
+        </p>
+        <input type="submit" value="确认提交" name="confirm" />
+        <input type="submit" value="  取消  " name="cancel" />
     </form>
+    </div>
 </body>
 
 </html>
