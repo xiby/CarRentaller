@@ -4,3 +4,4 @@ db.sqlite3
 /rental/__pycache__/
 /rental/migrations/
 /CarRentaller/__pycache__/
+*.log
