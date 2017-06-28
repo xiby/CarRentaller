@@ -3,6 +3,7 @@
 
 <head>
     <meta content="text/html; charset=utf-8" />
+    <meta charset="utf-8">
     <title>经理页面</title>
     <style type="text/css">
         * {
@@ -21,7 +22,7 @@
         }
         
         #nav ul li {
-            float: right;
+            float: left;
             line-height: 40px;
             text-align: right;
             position: relative;
@@ -71,10 +72,10 @@
 </head>
 <div id="nav">
     <ul>
-        <li><a href="/manager/">{{data}}</a>
-            <ul>
+        <!--<li><a href="/manager/">{{data}}</a>-->
+            <!--<ul>
                 <li><button name="logout" value="退出登陆" /></li>
-            </ul>
+            </ul>-->
             <li><a href="#">员工管理</a>
                 <ul>
                     <li><a href="/manager/addWorker/">增加员工</a></li>
@@ -89,10 +90,12 @@
                     <li><a href='#'>查看车辆</a></li>
                 </ul>
             </li>
+            <li><a href="/manager/">{{data}}</a>
+            </li>
     </ul>
 </div>
-
 <body>
+    <input class="botton" type="submit" name="logout" value="登出">
 </body>
 
 </html>
