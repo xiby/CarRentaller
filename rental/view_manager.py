@@ -18,6 +18,11 @@ from django.db import connection
 cursor=connection.cursor()
 # import models
 
+def logout(request):
+    response=redirect('/login/')
+    response.delete_cookie('userid')
+    return response
+
 def manager(request):
     if request.method=='GET':
         try:
@@ -25,6 +30,8 @@ def manager(request):
             return render(request,'manager.html',{"data":worker.Wname})
         except ObjectDoesNotExist:
             return HttpResponse("ERROR")
+    elif request.method=='POST' and 'logout' in request.POST:
+        return logout(request)
     else:
         return HttpResponse('ERROR')
 
@@ -137,18 +144,57 @@ def showAll(request):
             return render(request,'showWorkers.html',{"data":data})
         except ObjectDoesNotExist:
             return HttpResponse("发生内部错误")
-    elif request.method=='POST':
-        if 'confirm' in request.POST:       #修改信息确认
-            pass
-        elif 'addconfig' in request.POST:   #增加信息确认
-            pass
-    else:
-        return HttpResponse("发生了一个严重的错误，服务器收到了攻击")
 
 def ctmanager(request):
     if request.method=='GET':
         cartype=Cartype.objects.all()
         return render_to_response('ctmanager.html',locals())
+    elif request.method=='POST':
+        if 'confirm' in request.POST:       #修改信息确认
+            ctid=request.POST['ctid']
+            if(ctid==''):
+                return HttpResponse('编号列不能为空')
+            else:
+                try:
+                    ctype=Cartype.objects.get(CTnumber=int(ctid))
+                    newprice=request.POST['price']
+                    newdeposit=request.POST['deposit']
+                    if newprice!='':
+                        ctype.CTprice=newprice
+                    if newdeposit!='':
+                        ctype.CTcost=newdeposit
+                    ctype.save()
+                    return render_to_response('success.html',{"data":'/'})
+                except ObjectDoesNotExist:
+                    return HttpResponse('输入了错误的车型编号')
+                    
+        elif 'addconfig' in request.POST:   #增加信息确认
+            for item in request.POST:
+                if request.POST[item]=='':
+                    return HttpResponse('表单未填写完成，请返回上一界面重新填写！')
+            else:
+                try:
+                    brand=request.POST['brand']
+                    price=request.POST['price']
+                    deposit=request.POST['deposit']
+                    engine=request.POST['engine']
+                    gears=request.POST['gears']
+                    seats=request.POST['seats']
+                    cartype=Cartype(CTbrand=brand,
+                    CTprice=price,
+                    CTcost=deposit,
+                    CTseats=seats,
+                    CTengine=engine,
+                    CTgears=gears,
+                    CTdrawway='./',
+                    CTaddtime=datetime.datetime.now().date(),
+                    CTperson=Worker.objects.get(id=int(request.COOKIES['userid'])))
+                    cartype.save()
+                    return render_to_response('success.html',{"data":'/'})
+                except ObjectDoesNotExist:
+                    return HttpResponse('发生了一个内部错误')
+    else:
+        return HttpResponse("发生了一个严重的错误，服务器收到了攻击")
 def workerm(request):
     if request.method=='GET':
         return render(request,'workerm.html')

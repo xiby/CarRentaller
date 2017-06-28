@@ -38,8 +38,9 @@ def login(request):
         print('posting')
         userid=request.POST['userid']
         usertittle=request.POST['job']
-        
-        if Worker.objects.filter(id=userid,Wtittle=usertittle).exists():
+        print(userid)
+        print(usertittle)
+        if Worker.objects.filter(id=userid,Wtittle=usertittle,WExit=1).exists():
             user=Worker.objects.get(id=userid,Wtittle=usertittle)
             if user.Wsecret==request.POST['password']:
                 if usertittle=='职工':
