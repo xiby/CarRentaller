@@ -4,16 +4,36 @@
 <head>
     <meta charset="utf-8">
     <title>relet</title>
-    <link rel="stylesheet" href="/static/css/form.css" type="text/css">
+    <link rel="stylesheet" href="./css/form.css" type="text/css">
 </head>
-
+<div id="nav">
+    <ul>
+        <li><a href="/worker/">首页</a>
+        </li>
+        <li><a href="#">订单管理</a>
+            <ul>
+                <li><a href='/generate/'>产生订单</a></li>
+                <li><a href='/show/'>预约订单</a></li>
+            </ul>
+        </li>
+        <li><a href="#">订单查询</a>
+            <ul>
+                <li><a href='/showRunning/'>进行中</a></li>
+                <li><a href='/showWaitting/'>等待验收</a></li>
+                <li><a href='/showFinished/'>已完成</a></li>
+            </ul>
+        </li>
+    </ul>
+</div>
 <body>
-    <div class="relet">
-        <label>RELET</label>
-        <form id="login-form" method="post">
-            <input class="input" type="text" vlaue="" name="userid" placeholder="请输入订单号">
+    <div id="content">
+        <form id="show-form" method="post">
+            <label>RELET</label>
+            <p>
+                <input class="input" type="text" name="userid" value="" placeholder="请输入订单号">
             </p>
-            <input class="input" type="password" name="password" value="" placeholder="请输入时间段">
+            <p>
+                <input class="input" type="password" name="password" value="" placeholder="请输入时间段">
             </p>
             <input class="botton" type="submit" name="confirm" value="续租">
             <input class="botton" type="submit" name="cancel" value="取消">

@@ -8,28 +8,24 @@
 </head>
 <div id="nav">
     <ul>
-        <li><a href="/manager/">{{data}}</a>
+        <li><a href="/manager/">首页</a>
+        </li>
+        <li><a href="#">员工管理</a>
             <ul>
-                <li><button name="logout" value="退出登陆" /></li>
+                <li><a href="/manager/addWorker/">增加员工</a></li>
+                <li><a href="/manager/dropworker/">开除员工</a></li>
+                <li><a href="showall/">查看所有</a></li>
             </ul>
-            <li><a href="/manager/">首页</a>
-            </li>
-            <li><a href="#">员工管理</a>
-                <ul>
-                    <li><a href="/manager/addWorker/">增加员工</a></li>
-                    <li><a href="/manager/dropworker/">开除员工</a></li>
-                    <li><a href="showall/">查看所有</a></li>
-                </ul>
-            </li>
-            <li><a href="#">车辆管理</a>
-                <ul>
-                    <li><a href='#'>增加车辆</a></li>
-                    <li><a href='#'>车辆报废</a></li>
-                    <li><a href='#'>查看车辆</a></li>
-                </ul>
-            </li>
-            <li><a href="/manager/">{{data}}</a>
-            </li>
+        </li>
+        <li><a href="#">车辆管理</a>
+            <ul>
+                <li><a href='#'>增加车辆</a></li>
+                <li><a href='#'>车辆报废</a></li>
+                <li><a href='#'>查看车辆</a></li>
+            </ul>
+        </li>
+        <li><a href="/manager/">{{data}}</a>
+        </li>
     </ul>
 </div>
 
