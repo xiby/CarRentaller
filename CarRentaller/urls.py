@@ -28,6 +28,7 @@ from rental.views import complete
 from rental.views import showRunning
 from rental.views import showWaitting
 from rental.views import showFinished
+from rental.views import logout
 
 from rental.view_manager import manager
 from rental.view_manager import workerm
@@ -59,7 +60,6 @@ urlpatterns = [
     url(r'^manager/dropCar',dropCar),
     url(r'manager/ctmanager',ctmanager),
     url(r'^manager/$',manager),
-    
-
+    url(r'^logout/$',logout),
     url(r'account/',account),
 ]

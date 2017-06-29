@@ -10,7 +10,7 @@ from django.shortcuts import render
 
 from django.http import HttpResponse
 
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,render_to_response
 from django.core.exceptions import ObjectDoesNotExist
 from rental.models import Worker
 from rental.models import Cartype
@@ -116,8 +116,8 @@ def getCartypeInfo(brand,seats,gears,datelist):
     print(l)
     return l
 
-def loggout(request):
-    response=redirect('/login/')
+def logout(request):
+    response=render_to_response('success.html',{"data":'/login/'})
     response.delete_cookie('userid')
     return response
 
