@@ -96,6 +96,7 @@ class Illegal(models.Model):
     IllegalTime=models.DateField()
     IllegalMoney=models.FloatField()   
     Detail=models.CharField(max_length=50)
+    processed=models.BooleanField()
     Cnumber=models.ForeignKey(Car,related_name='carNum')
     class Meta:
         verbose_name=('illegals')      

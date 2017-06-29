@@ -53,13 +53,19 @@
                 </select>
             </p>
             <p><label>开始时间</label>
-                <input class="inputdate" type="date" name="startdate" />
+                <input class="input" type="date" name="startdate" />
             </p>
             <p><label>结束时间</label>
-                <input class="inputdate" type="date" name="enddate" />
+                <input class="input" type="date" name="enddate" />
             </p>
             <input class="button" type="submit" name="showtype">
         </form>
+        <script type="text/javascript">
+            var now = new Date()
+            var date_now = myDate.toLocaleDateString();
+            var sdate = document.getElementsByName("startdate")
+            sdate.min = date_now
+        </script>
     </div>
 </body>
 

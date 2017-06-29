@@ -91,16 +91,17 @@ def getCartypeInfo(brand,seats,gears,datelist):
     else:
         gears=True
     cursor=connection.cursor()
-    sql='''select Cnumber,CTbrand,CTseats,CTgears,CTprice,CTcost,CTdrawway,Starttime,Preturntime,Cid 
+    sql='''select distinct Cnumber,CTbrand,CTseats,CTgears,CTprice,CTcost,CTdrawway,Starttime,Preturntime,Cid 
     from rental_car,rental_cartype,rental_order 
     where rental_car.CTnumber_id=rental_cartype.CTnumber 
-    and rental_order.Cnumber_id=rental_car.Cid and rental_order.OrderStatus>1'''
+    and rental_order.Cnumber_id=rental_car.Cid'''
     cursor.execute(sql)
     ans=cursor.fetchall()
+    print(ans)
     ans=findcars(datelist,ans)
     l=list()
-    tmp=dict()
     for item in ans:
+        tmp=dict()
         tmp['Cnumber']=item[0]
         tmp['CTbrand']=item[1]
         tmp['CTseats']=item[2]
@@ -109,7 +110,10 @@ def getCartypeInfo(brand,seats,gears,datelist):
         tmp['CTcost']=item[5]
         tmp['CTdraway']=item[6]
         tmp['cid']=item[9]
+        tmp['starttime']=item[7]
+        tmp['preturntime']=item[8]
         l.append(tmp)
+    print(l)
     return l
 
 def loggout(request):
@@ -151,7 +155,7 @@ def complete(request):
         try:
             user=Worker.objects.get(id=userid)
             storeID=user.FSnumber_id
-            orderID=''+str(storeID)
+            orderID=''+str(storeID).zfill(5)
             date_now=datetime.datetime.now()
             date_now_str=date_now.strftime('%Y%m%d')
             orderID=orderID+date_now_str
@@ -301,7 +305,18 @@ def showRunning(request):
             return HttpResponse("ERROR!")
     else:
         return HttpResponse("ERROR")
-
+def checkillegal(cid,starttime,Freturntime):
+    return_time_str=datetime.datetime.strftime(Freturntime,'%Y-%m-%d')
+    start_time_str=datetime.datetime.strftime(starttime,'%Y-%m-%d')
+    sql='''select IllID,sum(IllegalMoney) from rental_illegal
+    where Cnumber_id='''+cid+' and IllegalTime<'+return_time_str+' and '+'IllegalTime>'+start_time_str+' and processed=0'
+    cursor.execute(sql)
+    ans=cursor.fetchall()
+    if len(ans)!=0:
+        sql='update rental_illegal set processed=1 where IllID='+ans[0][0]+' and processed=0'
+        return ans[0][1]
+    else:
+        return 0
 def getWaitting(userid):
     sql='''select * from rental_order
     where OrderStatus=2 and Cnumber_id='''+userid
