@@ -13,7 +13,7 @@
     background-image:url(../img/banner.jpg);
     background-size:100%;
 }*/
-
+body{background-size:1600px 900px;}
 body>.log {
     position: absolute;
     top: 35%;
@@ -23,7 +23,7 @@ body>.log {
     height: 250px;
     text-align: center;
     border-radius: 2px;
-    background-color: #FFFFFF;
+    /*background-color: #ffffff;*/
     border: 1px solid black;
 }
 
